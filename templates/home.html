@@ -92,41 +92,4 @@
         </div>
     </div>
 </section>
-{% endblock content %} {% block extra-script %}
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-    const PostListApp = {
-        delimiters: ['[[', ']]'],
-        data() {
-            return {
-                postList: [],
-            };
-        },
-
-        created() {
-            console.log('created..');
-            this.fetchPostList();
-        },
-
-        methods: {
-            fetchPostList() {
-                console.log('fetchPostList..');
-
-                axios
-                    .get('/api/post/list/')
-                    .then((res) => {
-                        console.log('fetch post list...res:', res);
-                        this.postList = res.data;
-                    })
-                    .catch((err) => {
-                        console.log('fetch post list...err:', err.response);
-                        alert(`${err.response.status} ${err.response.statusText}`);
-                    });
-            },
-        },
-    };
-
-    Vue.createApp(PostListApp).mount('#page-top');
-</script>
-{% endblock extra-script %}
+{% endblock content %} {% block extra-script %} {% include "include/post_list_vue.html" %} {% endblock extra-script %}

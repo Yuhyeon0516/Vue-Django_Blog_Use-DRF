@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.http import JsonResponse
 from django.views import View
 from django.views.generic.detail import BaseDetailView
@@ -10,7 +12,18 @@ from blog.models import Category, Post, Tag
 
 
 class ApiPostLV(BaseListView):
-    model = Post
+    def get_queryset(self):
+        paramCate = self.request.GET.get("category")
+        paramTag = self.request.GET.get("tag")
+
+        if paramCate:
+            qs = Post.objects.filter(category__name__iexact=paramCate)
+        elif paramTag:
+            qs = Post.objects.filter(tags__name__iexact=paramTag)
+        else:
+            qs = Post.objects.all()
+
+        return qs
 
     def render_to_response(self, context, **response_kwargs):
         qs = context["object_list"]

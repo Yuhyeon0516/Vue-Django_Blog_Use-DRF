@@ -53,6 +53,15 @@
                         alert(`${err.response.status} ${err.response.statusText}`);
                     });
             },
+
+            serverPage(category, tag) {
+                console.log('serverPage..', category, tag);
+
+                if (category && tag) alert(`serverPage() both args Error: ${category} and ${tag}`);
+                else if (category) location.href = `/?category=${category}#blog`;
+                else if (tag) location.href = `/?tag=${tag}#blog`;
+                else location.href = '/#blog';
+            },
         },
     };
 

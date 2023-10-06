@@ -1,12 +1,13 @@
-from typing import Any
-from django.db.models.query import QuerySet
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic.detail import BaseDetailView
+from django.views.generic.edit import BaseCreateView
 from django.views.generic.list import BaseListView
 from api.utils import obj_to_comment, obj_to_post, prev_next_post
 
-from blog.models import Category, Post, Tag
+from blog.models import Category, Comment, Post, Tag
 
 # Create your views here.
 
@@ -79,3 +80,19 @@ class ApiPostLikeDV(BaseDetailView):
         obj.save()
 
         return JsonResponse(data=obj.like, safe=False, status=200)
+
+
+@method_decorator(ensure_csrf_cookie, name="dispatch")
+class ApiCommentCV(BaseCreateView):
+    model = Comment
+    fields = "__all__"
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        comment = obj_to_comment(self.object)
+
+        return JsonResponse(data=comment, safe=True, status=201)
+
+    def form_invalid(self, form):
+        return JsonResponse(data=form.errors, safe=True, status=400)

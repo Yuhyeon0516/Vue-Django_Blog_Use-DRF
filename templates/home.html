@@ -63,33 +63,36 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     const PostListApp = {
-        delimiters: ["[[", "]]"],
+        delimiters: ['[[', ']]'],
         data() {
             return {
                 postList: [],
-            }
+            };
         },
 
         created() {
-            console.log("created..")
+            console.log('created..');
             this.fetchPostList();
         },
 
         methods: {
             fetchPostList() {
-                console.log("fetchPostList..")
+                console.log('fetchPostList..');
 
-                axios.get("/api/post/list/").then(res => {
-                    console.log("fetch post list...res:", res)
-                    this.postList = res.data
-                }).catch(err => {
-                    console.log("fetch post list...err:", err.response)
-                    alert(`${err.response.status} ${err.response.statusText}`)
-                })
-            }
-        }
-    }
+                axios
+                    .get('/api/post/list/')
+                    .then((res) => {
+                        console.log('fetch post list...res:', res);
+                        this.postList = res.data;
+                    })
+                    .catch((err) => {
+                        console.log('fetch post list...err:', err.response);
+                        alert(`${err.response.status} ${err.response.statusText}`);
+                    });
+            },
+        },
+    };
 
-    Vue.createApp(PostListApp).mount(#page-top)
+    Vue.createApp(PostListApp).mount('#page-top');
 </script>
 {% endblock extra-script %}

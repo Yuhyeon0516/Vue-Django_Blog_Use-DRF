@@ -9,6 +9,11 @@
     .my-content {
         white-space: pre-wrap;
     }
+
+    .my-link:hover {
+        cursor: pointer;
+        font-style: italic;
+    }
 </style>
 {% endblock extra-style %} {% block content %}
 <section class="page-section" id="post">
@@ -81,12 +86,16 @@
                 <!-- Prev Post Title-->
                 <div class="card mb-4">
                     <div class="card-header">Prev Post</div>
-                    <div class="card-body">This is previous post title</div>
+                    <div class="card-body">
+                        <p class="text-primary my-link" @click="fetchPostDetail(prevPost.id)">[[ prevPost.title ]]</p>
+                    </div>
                 </div>
                 <!-- Next Post Title-->
                 <div class="card mb-4">
                     <div class="card-header">Next Post</div>
-                    <div class="card-body">This is next post title</div>
+                    <div class="card-body">
+                        <p class="text-primary my-link" @click="fetchPostDetail(nextPost.id)">[[ nextPost.title ]]</p>
+                    </div>
                 </div>
                 <!-- Categories widget-->
                 <div class="card mb-4">

@@ -19,7 +19,6 @@
         </div>
         <div class="row">
             <div v-for="post in postList" :key="post.id" class="col-lg-4 col-sm-6 mb-4">
-                <!-- Portfolio item 1-->
                 <div class="portfolio-item">
                     <a class="portfolio-link" :href="`/blog/post/${post.id}/#post`">
                         <div class="portfolio-hover">
@@ -34,6 +33,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- My Pagination -->
+        <ul class="pagination justify-content-center">
+            <li :class="prevClass">
+                <div @click="firstPage" class="page-link">first</div>
+            </li>
+
+            <li :class="prevClass">
+                <div @click="prevPage" class="page-link">prev</div>
+            </li>
+
+            <li v-for="page in pages" :class="pageClass(page)">
+                <div @click="pageChanged(page)" class="page-link">[[ page ]]</div>
+            </li>
+
+            <li :class="nextClass">
+                <div @click="nextPage" class="page-link">next</div>
+            </li>
+
+            <li :class="nextClass">
+                <div @click="lastPage" class="page-link">last</div>
+            </li>
+        </ul>
     </div>
 </section>
 <!-- I am-->

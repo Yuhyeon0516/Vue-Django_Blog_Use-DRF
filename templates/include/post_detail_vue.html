@@ -6,6 +6,8 @@
         data() {
             return {
                 post: {},
+                prevPost: {},
+                nextPost: {},
             };
         },
 
@@ -23,7 +25,9 @@
                     .get(`/api/post/${postId}/`)
                     .then((res) => {
                         console.log('fetch post detail...res:', res);
-                        this.post = res.data;
+                        this.post = res.data.post;
+                        this.prevPost = res.data.prevPost;
+                        this.nextPost = res.data.nextPost;
                     })
                     .catch((err) => {
                         console.log('fetch post detail...err:', err.response);

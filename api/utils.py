@@ -1,4 +1,4 @@
-def obj_to_post(obj):
+def obj_to_post(obj, flag=True):
     post = dict(vars(obj))
 
     if obj.category:
@@ -22,5 +22,8 @@ def obj_to_post(obj):
         post["update_dt"] = "9999-12-31 00:00:00"
 
     del post["_state"], post["category_id"], post["create_dt"]
+
+    if not flag:
+        del post["tags"], post["update_dt"], post["description"], post["content"]
 
     return post

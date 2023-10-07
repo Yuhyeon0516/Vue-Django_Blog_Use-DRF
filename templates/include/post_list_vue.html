@@ -101,6 +101,16 @@
                 if (this.curPage === page) return 'page-item my-link active';
                 return 'page-item my-link';
             },
+
+            firstPage() {
+                this.curPage = 1;
+                this.fetchPostList(this.curPage);
+            },
+
+            lastPage() {
+                this.curPage = this.pageCnt;
+                this.fetchPostList(this.curPage);
+            },
         },
     };
 

@@ -8,7 +8,39 @@
                 postList: [],
                 category: '',
                 tag: '',
+                pageCnt: 1,
+                curPage: 1,
             };
+        },
+
+        computed: {
+            pages() {
+                console.log('pages..');
+
+                let pages3 = [];
+
+                if (this.pageCnt === 1) pages3 = [1];
+                else if (this.pageCnt === 2) pages3 = [2];
+                else if (this.pageCnt >= 3) {
+                    if (this.curPage === 1) page3 = [1, 2, 3];
+                    else if (this.curPage === this.pageCnt) page3 = [this.pageCnt - 2, this.pageCnt - 1, this.pageCnt];
+                    else pages3 = [this.curPage - 1, this.curPage, this.curPage + 1];
+                }
+
+                return pages3;
+            },
+
+            prevClass() {
+                console.log('prevClass..');
+                if (this.curPage === 1) return 'page-item disabled';
+                return 'page-item my-link';
+            },
+
+            nextClass() {
+                console.log('nextClass..');
+                if (this.curPage === this.pageCnt) return 'page-item disabled';
+                return 'page-item my-link';
+            },
         },
 
         created() {
@@ -20,23 +52,54 @@
         },
 
         methods: {
-            fetchPostList() {
-                console.log('fetchPostList..', this.category, this.tag);
+            fetchPostList(curPage = 1) {
+                console.log('fetchPostList..', curPage, this.category, this.tag);
                 let getUrl = '';
-                if (this.category) getUrl = `/api/post/list/?category=${this.category}`;
-                else if (this.tag) getUrl = `/api/post/list/?tag=${this.tag}`;
-                else getUrl = '/api/post/list/';
+                if (this.category) getUrl = `/api/post/list/?page=${curPage}&category=${this.category}`;
+                else if (this.tag) getUrl = `/api/post/list/?page=${curPage}&tag=${this.tag}`;
+                else getUrl = `/api/post/list/?page=${curPage}`;
 
                 axios
                     .get(getUrl)
                     .then((res) => {
                         console.log('fetch post list...res:', res);
                         this.postList = res.data;
+                        this.pageCnt = res.data.pageCnt;
+                        this.curPage = res.data.curPage;
                     })
                     .catch((err) => {
                         console.log('fetch post list...err:', err.response);
                         alert(`${err.response.status} ${err.response.statusText}`);
                     });
+            },
+
+            pageChanged(page) {
+                console.log('pageChanged..', page);
+
+                this.curPage = page;
+                this.fetchPostList(this.curPage);
+            },
+
+            prevPage() {
+                console.log('prevPage..');
+
+                if (this.curPage <= 1) return;
+                else this.curPage = this.curPage - 1;
+                this.fetchPostList(this.curPage);
+            },
+
+            nextPage() {
+                console.log('nextPage..');
+
+                if (this.curPage >= this.pageCnt) return;
+                else this.curPage = this.curPage + 1;
+                this.fetchPostList(this.curPage);
+            },
+
+            pageClass(page) {
+                console.log('pageClass..');
+                if (this.curPage === page) return 'page-item my-link active';
+                return 'page-item my-link';
             },
         },
     };

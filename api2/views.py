@@ -121,3 +121,10 @@ class PostListAPIView(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostListSerializer
     pagination_class = PostPageNumberPagination
+
+    def get_serializer_context(self):
+        return {
+            "request": None,
+            "format": self.format_kwarg,
+            "view": self,
+        }

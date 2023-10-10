@@ -30,6 +30,7 @@ from rest_framework.generics import (
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from api.utils import obj_to_comment, obj_to_post, prev_next_post
 from api2.serializer import (
     CateTagSerializer,
     CommentSerializer,
@@ -150,18 +151,20 @@ class PostRetrieveAPIView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        prevInstance, nextInstance = get_prev_next(instance)
         commentList = instance.comment_set.all()
 
-        data = {
-            "post": instance,
-            "prevPost": prevInstance,
-            "nextPost": nextInstance,
-            "commentList": commentList,
+        postDict = obj_to_post(instance)
+        prevDict, nextDict = prev_next_post(instance)
+        commentDict = [obj_to_comment(c) for c in commentList]
+
+        dataDict = {
+            "post": postDict,
+            "prevPost": prevDict,
+            "nextPost": nextDict,
+            "commentList": commentDict,
         }
 
-        serializer = self.get_serializer(instance=data)
-        return Response(serializer.data)
+        return Response(dataDict)
 
     def get_serializer_context(self):
         return {

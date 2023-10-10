@@ -59,9 +59,9 @@
             fetchPostList(curPage = 1) {
                 console.log('fetchPostList..', curPage, this.category, this.tag);
                 let getUrl = '';
-                if (this.category) getUrl = `/api/post/list/?page=${curPage}&category=${this.category}`;
-                else if (this.tag) getUrl = `/api/post/list/?page=${curPage}&tag=${this.tag}`;
-                else getUrl = `/api/post/list/?page=${curPage}`;
+                if (this.category) getUrl = `/api2/post/?page=${curPage}&category=${this.category}`;
+                else if (this.tag) getUrl = `/api2/post/?page=${curPage}&tag=${this.tag}`;
+                else getUrl = `/api2/post/?page=${curPage}`;
 
                 axios
                     .get(getUrl)

@@ -34,7 +34,7 @@
                 console.log('fetchPostDetail..', postId);
 
                 axios
-                    .get(`/api/post/${postId}/`)
+                    .get(`/api2/post/${postId}/`)
                     .then((res) => {
                         console.log('fetch post detail...res:', res);
                         this.post = res.data.post;
@@ -52,7 +52,7 @@
                 console.log('fetchCateTagList..');
 
                 axios
-                    .get(`/api/catetag/`)
+                    .get(`/api2/catetag/`)
                     .then((res) => {
                         console.log('fetchCateTagList...res:', res);
                         this.cateList = res.data.cateList;
@@ -77,7 +77,7 @@
                 console.log('likeCount..', id);
 
                 axios
-                    .get(`/api/like/${id}/`)
+                    .get(`/api2/post/${id}/like/`)
                     .then((res) => {
                         console.log('likeCount...res:', res);
                         this.post.like = res.data;
@@ -100,7 +100,7 @@
                 formData.set('post', this.post.id);
 
                 axios
-                    .post('/api/comment/create/', formData)
+                    .post('/api2/comment/', formData)
                     .then((res) => {
                         console.log('submitForm...res:', res);
                         this.commentList.push(res.data);

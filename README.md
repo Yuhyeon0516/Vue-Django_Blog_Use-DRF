@@ -6,4 +6,5 @@ Please refer to the video below for more details.
 
 # Result
 
-![Result]()
+![Result](https://github.com/Yuhyeon0516/Vue-Django_Blog_Use-DRF/assets/120432007/624eb2b9-1215-457d-a152-ca88668a4302)
+
